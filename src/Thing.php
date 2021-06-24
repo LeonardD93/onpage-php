@@ -18,7 +18,7 @@ class Thing
         }
     }
 
-    function val(string $field_name, string $lang = null): string | int | array | File
+    function val(string $field_name, string $lang = null): string | int | array | File | null
     {
         $field = $this->resolveField($field_name);
         $codename = $field->identifier($lang);

@@ -17,13 +17,13 @@ class Thing
             $this->setRelation($this->resource()->field($field_name), ThingCollection::fromResponse($api, $related_things));
         }
     }
+    
 
-    function val(string $field_name, string $lang = null): string | int | array | File
-    {
+    function val(string $field_name, string $lang = null): string | int | array | File | null {
         $field = $this->resolveField($field_name);
         $codename = $field->identifier($lang);
-        $values = $this->json->fields?->{$codename};
         $default = $field->is_multiple ? [] : null;
+        $values = $this->json->fields->{$codename} ?? $default;
         if (is_null($values)) return $default;
         if (!$field->is_multiple) $values = [$values];
         if (in_array($field->type, ['file', 'image'])) {
